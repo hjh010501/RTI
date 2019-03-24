@@ -11,6 +11,7 @@ DB_PASSWORD = urllib.parse.quote_plus(RTI.configs.MONGO_PASSWORD)
 client = MongoClient('mongodb://%s:%s@%s/%s' % (DB_NAME, DB_PASSWORD, DB_HOST, DB_TABLE))
 db = client.rti
 
-database_load('cpu',
+database_load('battery',
+              'cpu',
               'memory',
               'disk')
