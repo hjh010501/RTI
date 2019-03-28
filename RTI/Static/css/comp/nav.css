@@ -1,0 +1,54 @@
+.nav {
+    box-sizing: inherit;
+    height: 86px;
+}
+
+.nav-logo {
+    padding: 30px 0;
+    width: 28px;
+    height: 24px;
+}
+
+.nav-content {
+    width: 1040px;
+    max-width: 100%;
+    padding: 0 20px;
+    margin: auto;
+    position: relative;
+}
+
+.nav-left-side {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin: -2px 0 0 10px;
+    width: 100%;
+    background-color: transparent;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+
+.nav-menu {
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+
+.nav-menu-button {
+    border: 0;
+    font-size: 14px;
+    padding: 10px;
+    color: #999;
+    text-transform: uppercase;
+}

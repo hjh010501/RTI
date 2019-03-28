@@ -1,0 +1,17 @@
+@import "font.css";
+@import "comp/nav.css";
+@import "comp/heading.css";
+@import "comp/layout.css";
+
+a {
+    text-decoration: none;
+    font-family: 'Noto Sans KR Bold';
+    color: #1d1a1a;
+    letter-spacing: -1px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans KR';
+}

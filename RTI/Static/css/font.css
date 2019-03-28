@@ -1,0 +1,19 @@
+@import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff2) format('woff2'),
+    url(https://fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff) format('woff'),
+    url(https://fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'Noto Sans KR Bold';
+    font-style: normal;
+    font-weight: 600;
+    src: url(https://fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff2) format('woff2'),
+    url(https://fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff) format('woff'),
+    url(https://fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.otf) format('opentype');
+}

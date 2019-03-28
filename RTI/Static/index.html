@@ -1,0 +1,85 @@
+<html lang="ko">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <meta name="description" content="RTI :: Real-Time Inspector">
+    <meta property="og:title" content="RTI :: Real-Time Inspector">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hjh010501.github.io/neis-counter">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:description" content="RTI :: Real-Time Inspector">
+    <meta property="og:image" content="ogimage.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <link rel="stylesheet" type="text/css" href="css/init.css">
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>🔍RTI :: Real-Time Inspector</title>
+</head>
+
+<body>
+    <div class="nav">
+        <div class="nav-content">
+            <div class="nav-left-side">
+                <div class="nav-logo">😊</div>
+                <div class="nav-menu">
+                    <div class="nav-menu-button">Dashboard</div>
+                    <div class="nav-menu-button">Performance</div>
+                    <div class="nav-menu-button">Logs</div>
+                    <div class="nav-menu-button">Console</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layout-left">
+
+    </div>
+
+    <div class="layout-center">
+        <h1>hello</h1>
+        <h2></h2>
+        <h3></h3>
+        <h4></h4>
+        <h5></h5>
+    </div>
+</body>
+
+<script src="https://js.pusher.com/4.4/pusher.min.js"></script>
+<script>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('4fa94fab975bd79f2408', {
+        cluster: 'ap3',
+        forceTLS: true
+    });
+
+    var channel = pusher.subscribe('rti-cpu-channel');
+    channel.bind('cpu-perform', function (data) {
+        document.querySelector('.layout-center > h3').innerHTML += JSON.stringify(data);
+    });
+
+    var channel = pusher.subscribe('rti-memory-channel');
+    channel.bind('memory-perform', function (data) {
+        document.querySelector('.layout-center > h4').innerHTML += JSON.stringify(data);
+    });
+
+    var channel = pusher.subscribe('rti-battery-channel');
+    channel.bind('battery-perform', function (data) {
+        document.querySelector('.layout-center > h2').innerHTML += JSON.stringify(data);
+    });
+
+    var channel = pusher.subscribe('rti-disk-channel');
+    channel.bind('disk-perform', function (data) {
+        document.querySelector('.layout-center > h5').innerHTML += JSON.stringify(data);
+    });
+
+
+
+</script>
+
+</html>

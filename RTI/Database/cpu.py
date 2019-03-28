@@ -1,10 +1,9 @@
 from . import db as DB
 from RTI.Feature.cpu import *
 
-def per_cpu_upload():
+def per_cpu_upload(p):
     collection  = DB.per_cpu
-    cpu_per = get_processor_usage('percent')
-    collection.insert({"p": cpu_per})
+    collection.insert({"p": p})
 
 def info_cpu_upload():
     collection = DB.info_cpu
@@ -13,5 +12,4 @@ def info_cpu_upload():
     cputhread = get_processor_thread()
     collection.insert({"n": cpuname, "c": cpucore, "t": cputhread})
 
-per_cpu_upload()
 info_cpu_upload()
