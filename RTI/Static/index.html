@@ -35,11 +35,12 @@
     </div>
 
     <div class="layout-left">
-
+        <div 
     </div>
 
     <div class="layout-center">
         <h1>hello</h1>
+        <canvas id="myChart" width="400" height="400"></canvas>
         <h2></h2>
         <h3></h3>
         <h4></h4>
@@ -48,7 +49,13 @@
 </body>
 
 <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
+<script src="https://www.chartjs.org/dist/2.8.0/Chart.min.js"></script>
 <script>
+
+
+    let cpucount = new Array();
+    let cpuper = new Array();
+    let cpucount_number = 0;
 
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
@@ -60,7 +67,11 @@
 
     var channel = pusher.subscribe('rti-cpu-channel');
     channel.bind('cpu-perform', function (data) {
-        document.querySelector('.layout-center > h3').innerHTML += JSON.stringify(data);
+        // document.querySelector('.layout-center > h3').innerHTML += JSON.stringify(data);
+        cpucount.push(cpucount_number);
+        cpuper.push(Math.round(data.p));
+        cpucount_number++;
+        myChart.update()
     });
 
     var channel = pusher.subscribe('rti-memory-channel');
@@ -77,6 +88,90 @@
     channel.bind('disk-perform', function (data) {
         document.querySelector('.layout-center > h5').innerHTML += JSON.stringify(data);
     });
+
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: cpucount,
+            datasets: [{
+                label: '# of Votes',
+                data: cpuper,
+                borderWidth: 1,
+                fill: true
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        autoSkip: true,
+                        max: 100
+                    }
+                }]
+            }
+        }
+    });
+    // var presets = window.chartColors;
+	// 	var utils = Samples.utils;
+	// 	var inputs = {
+	// 		min: -100,
+	// 		max: 100,
+	// 		count: 8,
+	// 		decimals: 2,
+	// 		continuity: 1
+	// 	};
+
+	// 	var options = {
+	// 		maintainAspectRatio: false,
+	// 		spanGaps: false,
+	// 		elements: {
+	// 			line: {
+	// 				tension: 0.000001
+	// 			}
+	// 		},
+	// 		plugins: {
+	// 			filler: {
+	// 				propagate: false
+	// 			}
+	// 		},
+	// 		scales: {
+	// 			xAxes: [{
+	// 				ticks: {
+	// 					autoSkip: false,
+	// 					maxRotation: 0
+	// 				}
+	// 			}]
+	// 		}
+	// 	};
+
+	// 	[false, 'origin', 'start', 'end'].forEach(function(boundary, index) {
+
+	// 		// reset the random seed to generate the same data for all charts
+	// 		utils.srand(8);
+
+	// 		new Chart('myChart', {
+	// 			type: 'line',
+	// 			data: {
+	// 				labels: generateLabels(),
+	// 				datasets: [{
+	// 					backgroundColor: utils.transparentize(presets.red),
+	// 					borderColor: presets.red,
+	// 					data: generateData(),
+	// 					label: 'Dataset',
+	// 					fill: boundary
+	// 				}]
+	// 			},
+	// 			options: Chart.helpers.merge(options, {
+	// 				title: {
+	// 					text: 'fill: ' + boundary,
+	// 					display: true
+	// 				}
+	// 			})
+	// 		});
+	// 	});
 
 
 
