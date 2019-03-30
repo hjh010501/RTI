@@ -40,7 +40,9 @@
 
     <div class="layout-center">
         <h1>hello</h1>
-        <canvas id="myChart" width="400" height="400"></canvas>
+        <div style="width: 100%; height: 200px;" class="cpu-chart">
+            <canvas id="myChart" width="400" height="150"></canvas>
+        </div>
         <h2></h2>
         <h3></h3>
         <h4></h4>
@@ -68,26 +70,32 @@
     var channel = pusher.subscribe('rti-cpu-channel');
     channel.bind('cpu-perform', function (data) {
         // document.querySelector('.layout-center > h3').innerHTML += JSON.stringify(data);
+        if(cpucount.length >= 20) {
+            cpucount.shift()
+            cpuper.shift()
+            console.log(cpucount);
+        }
+
         cpucount.push(cpucount_number);
         cpuper.push(Math.round(data.p));
         cpucount_number++;
         myChart.update()
     });
 
-    var channel = pusher.subscribe('rti-memory-channel');
-    channel.bind('memory-perform', function (data) {
-        document.querySelector('.layout-center > h4').innerHTML += JSON.stringify(data);
-    });
+    // var channel = pusher.subscribe('rti-memory-channel');
+    // channel.bind('memory-perform', function (data) {
+    //     document.querySelector('.layout-center > h4').innerHTML += JSON.stringify(data);
+    // });
 
-    var channel = pusher.subscribe('rti-battery-channel');
-    channel.bind('battery-perform', function (data) {
-        document.querySelector('.layout-center > h2').innerHTML += JSON.stringify(data);
-    });
+    // var channel = pusher.subscribe('rti-battery-channel');
+    // channel.bind('battery-perform', function (data) {
+    //     document.querySelector('.layout-center > h2').innerHTML += JSON.stringify(data);
+    // });
 
-    var channel = pusher.subscribe('rti-disk-channel');
-    channel.bind('disk-perform', function (data) {
-        document.querySelector('.layout-center > h5').innerHTML += JSON.stringify(data);
-    });
+    // var channel = pusher.subscribe('rti-disk-channel');
+    // channel.bind('disk-perform', function (data) {
+    //     document.querySelector('.layout-center > h5').innerHTML += JSON.stringify(data);
+    // });
 
 
     var ctx = document.getElementById('myChart').getContext('2d');
@@ -96,10 +104,16 @@
         data: {
             labels: cpucount,
             datasets: [{
-                label: '# of Votes',
+                label: 'CPU Usage',
                 data: cpuper,
-                borderWidth: 1,
-                fill: true
+                borderWidth: 3,
+                fill: true,
+                backgroundColor: 'rgba(246, 41, 99, .1)',
+                borderColor: 'rgba(246, 41, 99, 1)',
+                pointBorderColor: 'rgba(246, 41, 99, 1)',
+                pointBackgroundColor: 'white',
+                pointHoverBackgroundColor: 'white',
+                tension: 0.3
             }]
         },
         options: {
@@ -108,72 +122,25 @@
                     ticks: {
                         beginAtZero: true,
                         autoSkip: true,
-                        max: 100
+                        max: 100,
+                        fontFamily: 'Noto Sans KR',
+                        fontColor: '#000',
+                        callback: function(value, index, values) {
+                            return value + '%'
+                        }
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        autoSkip: true,
+                        max: 100,
+                        fontFamily: 'Noto Sans KR',
+                        fontColor: '#000'
                     }
                 }]
             }
         }
     });
-    // var presets = window.chartColors;
-	// 	var utils = Samples.utils;
-	// 	var inputs = {
-	// 		min: -100,
-	// 		max: 100,
-	// 		count: 8,
-	// 		decimals: 2,
-	// 		continuity: 1
-	// 	};
-
-	// 	var options = {
-	// 		maintainAspectRatio: false,
-	// 		spanGaps: false,
-	// 		elements: {
-	// 			line: {
-	// 				tension: 0.000001
-	// 			}
-	// 		},
-	// 		plugins: {
-	// 			filler: {
-	// 				propagate: false
-	// 			}
-	// 		},
-	// 		scales: {
-	// 			xAxes: [{
-	// 				ticks: {
-	// 					autoSkip: false,
-	// 					maxRotation: 0
-	// 				}
-	// 			}]
-	// 		}
-	// 	};
-
-	// 	[false, 'origin', 'start', 'end'].forEach(function(boundary, index) {
-
-	// 		// reset the random seed to generate the same data for all charts
-	// 		utils.srand(8);
-
-	// 		new Chart('myChart', {
-	// 			type: 'line',
-	// 			data: {
-	// 				labels: generateLabels(),
-	// 				datasets: [{
-	// 					backgroundColor: utils.transparentize(presets.red),
-	// 					borderColor: presets.red,
-	// 					data: generateData(),
-	// 					label: 'Dataset',
-	// 					fill: boundary
-	// 				}]
-	// 			},
-	// 			options: Chart.helpers.merge(options, {
-	// 				title: {
-	// 					text: 'fill: ' + boundary,
-	// 					display: true
-	// 				}
-	// 			})
-	// 		});
-	// 	});
-
-
 
 </script>
 
