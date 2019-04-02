@@ -4,11 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-flask = "*"
+Flask = "*"
 pymongo = "*"
-python-dotenv = "*"
-apscheduler = "*"
+APScheduler = "*"
 pusher = "*"
+Flask-MongoAlchemy = "*"
 
 [dev-packages]
 

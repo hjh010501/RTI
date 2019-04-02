@@ -1,15 +1,22 @@
 from . import db as DB
 from RTI.Feature.cpu import *
 
+class info_cpu(DB.Document):
+    n = DB.StringField()
+    c = DB.StringField()
+    t = DB.StringField()
+
+class per_cpu(DB.Document):
+    n = DB.FloatField()
+
 def per_cpu_upload(p):
-    collection  = DB.per_cpu
-    collection.insert({"p": p})
+    per_cpu(n=p).save()
 
 def info_cpu_upload():
-    collection = DB.info_cpu
     cpuname = get_processor_name()
     cpucore = get_processor_core()
     cputhread = get_processor_thread()
-    collection.insert({"n": cpuname, "c": cpucore, "t": cputhread})
+    info = info_cpu(n=cpuname, c=cpucore, t=cputhread)
+    info.save()
 
 info_cpu_upload()
