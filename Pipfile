@@ -9,6 +9,8 @@ pymongo = "*"
 APScheduler = "*"
 pusher = "*"
 Flask-MongoAlchemy = "*"
+Jinja2 = ">=2.10.1"
+urllib3 = ">=1.24.2"
 
 [dev-packages]
 

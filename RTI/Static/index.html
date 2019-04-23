@@ -35,7 +35,7 @@
     </div>
 
     <div class="layout-left">
-        
+
     </div>
 
     <div class="layout-center">
@@ -60,207 +60,75 @@
 <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
 <script src="https://www.chartjs.org/dist/2.8.0/Chart.min.js"></script>
 <script src="https://rawgit.com/kottenator/jquery-circle-progress/1.2.2/dist/circle-progress.js"></script>
+<script src="js/data.js"></script>
+<script src="js/pusher.js"></script>
+<script src="js/charts.js"></script>
 <script>
 
 
-    let cpucount = new Array();
-    let cpuper = new Array();
-    let cpupernum = new Array();
-    let cpucount_number = 0;
-
-
-    let memorycount = new Array();
-    let memoryper = new Array();
-    let memorycount_number = 0;
-
-    let diskcount = new Array();
-    let diskper = new Array();
-    let diskcount_number = 0;
-
-    // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
-
-    var pusher = new Pusher('4fa94fab975bd79f2408', {
-        cluster: 'ap3',
-        forceTLS: true
-    });
-
-    var cpuchannel = pusher.subscribe('rti-cpu-channel');
-    cpuchannel.bind('cpu-perform', function (data) {
-        // document.querySelector('.layout-center > h3').innerHTML += JSON.stringify(data);
-        if(cpucount.length >= 20) {
-            cpucount.shift()
-            cpuper.shift()
-            console.log(cpucount);
-        }
-
-        cpucount.push(cpucount_number);
-        cpuper.push(Math.round(data.p));
-        c4.circleProgress('value', Math.round(data.p) * 0.01);
-        cpucount_number++;
-        cpuchart.update()
-    });
-
-    var memorychannel = pusher.subscribe('rti-memory-channel');
-    memorychannel.bind('memory-perform', function (data) {
-        if(memorycount.length >= 20) {
-            memorycount.shift()
-            memoryper.shift()
-            console.log(memorycount);
-        }
-
-        memorycount.push(memorycount_number);
-        memoryper.push(Math.round(data.mper));
-        c5.circleProgress('value', Math.round(data.mper) * 0.01);
-        memorycount_number++;
-        memorychart.update()
-
-    });
-
-    // var channel = pusher.subscribe('rti-battery-channel');
-    // channel.bind('battery-perform', function (data) {
-    //     document.querySelector('.layout-center > h2').innerHTML += JSON.stringify(data);
-    // });
-
-    var channel = pusher.subscribe('rti-disk-channel');
-    channel.bind('disk-perform', function (data) {
-        if(diskcount.length >= 60) {
-            diskcount.shift()
-            diskper.shift()
-            console.log(memorycount);
-        }
-
-        diskcount.push(diskcount_number);
-        diskper.push(Math.round(data.dper));
-        c6.circleProgress('value', Math.round(data.dper) * 0.01);
-        diskcount_number++;
-        diskchart.update()
-    });
-
-
-    var chartoptions = {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                        autoSkip: true,
-                        max: 100,
-                        fontFamily: 'Noto Sans KR',
-                        fontColor: '#fff',
-                        callback: function(value, index, values) {
-                            return value + '%'
-                        }
-                    }
-                }],
-                xAxes: [{
-                    ticks: {
-                        autoSkip: true,
-                        max: 100,
-                        fontFamily: 'Noto Sans KR',
-                        fontColor: '#fff'
-                    }
-                }]
-            }
-    };
-
-    var selcpuchart = document.getElementById('cpu-chart').getContext('2d');
-    var cpuchart = new Chart(selcpuchart, {
+    let cpuchart = new Chart(selcpuchart, {
         type: 'line',
         data: {
             labels: cpucount,
-            datasets: [{
-                label: 'CPU Usage',
-                data: cpuper,
-                borderWidth: 3,
-                fill: true,
-                backgroundColor: 'rgba(246, 41, 99, .1)',
-                borderColor: 'rgba(246, 41, 99, 1)',
-                pointBorderColor: 'rgba(246, 41, 99, 1)',
-                pointBackgroundColor: 'white',
-                pointHoverBackgroundColor: 'white',
-                tension: 0.3
-            }]
+            datasets: cpuchartdatasets
         },
         options: chartoptions
     });
 
-    var selmemorychart = document.getElementById('memory-chart').getContext('2d');
-    var memorychart = new Chart(selmemorychart, {
+    let memorychart = new Chart(selmemorychart, {
         type: 'line',
         data: {
             labels: memorycount,
-            datasets: [{
-                label: 'Memory Usage',
-                data: memoryper,
-                borderWidth: 3,
-                fill: true,
-                backgroundColor: 'rgba(15, 236, 202, .1)',
-                borderColor: 'rgba(15, 236, 202, 1)',
-                pointBorderColor: 'rgba(15, 236, 202, 1)',
-                pointBackgroundColor: 'white',
-                pointHoverBackgroundColor: 'white',
-                tension: 0.3
-            }]
+            datasets: memorychartdatasets
         },
         options: chartoptions
     });
 
-    var seldiskchart = document.getElementById('disk-chart').getContext('2d');
-    var diskchart = new Chart(seldiskchart, {
+    let diskchart = new Chart(seldiskchart, {
         type: 'line',
         data: {
             labels: diskcount,
-            datasets: [{
-                label: 'Disk Usage',
-                data: diskper,
-                borderWidth: 3,
-                fill: true,
-                backgroundColor: 'rgba(236, 213, 15, .1)',
-                borderColor: 'rgba(236, 213, 15, 1)',
-                pointBorderColor: 'rgba(236, 213, 15, 1)',
-                pointBackgroundColor: 'white',
-                pointHoverBackgroundColor: 'white',
-                tension: 0.3
-            }]
+            datasets: diskchartdatasets
         },
         options: chartoptions
     });
 
-    var c4 = $('#cpucircle');
+
+    let c4 = $('#cpucircle');
     c4.circleProgress({
         value: 0,
-        startAngle: 3 / 2 *  Math.PI,
+        startAngle: 3 / 2 * Math.PI,
         size: 80,
         fill: {
             gradient: ["rgba(168, 68, 241, 1)", "rgba(246, 41, 99, 1)"]
         }
-    }).on('circle-animation-progress', function(event, progress, stepValue) {
-    $(this).find('strong').text(Math.round(stepValue * 100) + "%");
-  });
+    }).on('circle-animation-progress', function (event, progress, stepValue) {
+        $(this).find('strong').text(Math.round(stepValue * 100) + "%");
+    });
 
-  var c5 = $('#memorycircle');
+    let c5 = $('#memorycircle');
     c5.circleProgress({
         value: 0,
-        startAngle: 3 / 2 *  Math.PI,
+        startAngle: 3 / 2 * Math.PI,
         size: 80,
         fill: {
             gradient: ["rgba(15, 236, 202, 1)", "rgba(15, 236, 42, 1)"]
         }
-    }).on('circle-animation-progress', function(event, progress, stepValue) {
-    $(this).find('strong').text(Math.round(stepValue * 100) + "%");
-  });
+    }).on('circle-animation-progress', function (event, progress, stepValue) {
+        $(this).find('strong').text(Math.round(stepValue * 100) + "%");
+    });
 
-  var c6 = $('#diskcircle');
+    let c6 = $('#diskcircle');
     c6.circleProgress({
         value: 0,
-        startAngle: 3 / 2 *  Math.PI,
+        startAngle: 3 / 2 * Math.PI,
         size: 80,
         fill: {
             gradient: ["red", "orange"]
         }
-    }).on('circle-animation-progress', function(event, progress, stepValue) {
-    $(this).find('strong').text(Math.round(stepValue * 100) + "%");
-  });
+    }).on('circle-animation-progress', function (event, progress, stepValue) {
+        $(this).find('strong').text(Math.round(stepValue * 100) + "%");
+    });
 
 </script>
 
