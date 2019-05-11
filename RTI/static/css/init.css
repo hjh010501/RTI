@@ -2,7 +2,7 @@
 @import "comp/nav.css";
 @import "comp/heading.css";
 @import "comp/layout.css";
-
+@import "comp/logspanel.css";
 
 * {
     color: #fff;

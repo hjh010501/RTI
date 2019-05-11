@@ -57,3 +57,9 @@ diskchannel.bind('disk-perform', function (data) {
     document.getElementById('diskused').innerHTML = data.dused;
     document.getElementById('diskunused').innerHTML = data.dunused;
 });
+
+let trainchannel = pusher.subscribe('rti-train-channel');
+trainchannel.bind('train-perform', function (data) {
+    $('.logspanel').append("[" + data.t + "] " + data.logs + "<br>");
+    $(".logspanel").scrollTop($(".logspanel")[0].scrollHeight);
+});

@@ -3,7 +3,7 @@ from RTI.database.memory import get_memory_info
 from RTI.database.disk import get_disk_info
 from RTI.database.battery import get_battery_info
 from RTI import app
-
+from RTI.loader import resource_load
 from RTI.feature.cpu import *
 from RTI.feature.memory import *
 
@@ -20,3 +20,5 @@ dbinfo = {
 @app.route('/')
 def ALLInfo():
        return render_template('index.html', dbinfo=dbinfo)
+
+resource_load('train')

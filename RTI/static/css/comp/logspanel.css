@@ -1,0 +1,11 @@
+.logspanel {
+    width: 1024px;
+    height: 600px;
+    background-color: #171717;
+    font-family: 'Noto Sans KR';
+    letter-spacing: -1px;
+    font-size: 18px;
+    padding: 25px;
+    box-shadow: 15px 19px 32px -18px rgba(21,19,19,.07);
+    overflow:scroll;
+}
