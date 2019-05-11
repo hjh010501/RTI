@@ -15,7 +15,7 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/init.css') }}">
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/odometer-theme-default.css') }}" />
     <title>🔍RTI :: Real-Time Inspector</title>
 </head>
 
@@ -25,55 +25,75 @@
             <div class="nav-left-side">
                 <div class="nav-logo">😊</div>
                 <div class="nav-menu">
-                    <div class="nav-menu-button">Dashboard</div>
-                    <div class="nav-menu-button">Performance</div>
-                    <div class="nav-menu-button">Logs</div>
-                    <div class="nav-menu-button">Console</div>
+                    <div onClick="toDashboard()" class="nav-menu-button Dashboardbutton">Dashboard</div>
+                    <div onClick="toStatus()" class="nav-menu-button Statusbutton">Status</div>
+                    <div onClick="toLogs()"  class="nav-menu-button Logsbutton">Logs</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="test">
-        
-    </div>
-    <div class="layout-left">
-
-    </div>
-
     <div class="layout-center">
-        <h1>Dashboard</h1>
-        <div class="circleprogress" id="cpucircle">
-            <strong></strong>
+        <div class="Dashboard">
+            <h1>Dashboard</h1>
+            <div class="circleprogress" id="cpucircle">
+                <strong></strong>
+            </div>
+            <div style="margin-left: 50px;" class="circleprogress" id="memorycircle">
+                <strong></strong>
+            </div>
+            <div style="margin-left: 50px;" class="circleprogress" id="diskcircle">
+                <strong></strong>
+            </div>
+            <div class="chartarea">
+                <h3> {{ dbinfo['cpu_info'] }}</h3>
+                <canvas id="cpu-chart" width="400" height="150"></canvas>
+            </div>
+            <div class="chartarea">
+                <h3>Unused: <div class="odometer" id="memoryunused"></div>MB / Used: <div id="memoryused"
+                        class="odometer">
+                    </div>MB</h3>
+                <canvas id="memory-chart" width="400" height="150"></canvas>
+            </div>
+            <div class="chartarea">
+                <h3>Unused: <div class="odometer" id="diskunused"></div>MB / Used: <div id="diskused" class="odometer">
+                    </div>MB</h3>
+                <canvas id="disk-chart" width="400" height="150"></canvas>
+            </div>
         </div>
-        <div style="margin-left: 50px;" class="circleprogress" id="memorycircle">
-            <strong></strong>
+
+        <div style="display: none;" class="Status">
+                <h1>Status</h1>
+
         </div>
-        <div style="margin-left: 50px;" class="circleprogress" id="diskcircle">
-            <strong></strong>
+
+        <div style="display: none;" class="Logs">
+                <h1>Logs</h1>
+
         </div>
-        <div style="width: 100%; height: 200px;" class="cpu-chart">
-            <canvas id="cpu-chart" width="400" height="150"></canvas>
-            <canvas id="memory-chart" width="400" height="150"></canvas>
-            <canvas id="disk-chart" width="400" height="150"></canvas>
-        </div>
+
     </div>
 </body>
+<script src="{{ url_for('static', filename='js/odometer.js') }}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
 <script src="https://www.chartjs.org/dist/2.8.0/Chart.min.js"></script>
 <script src="https://rawgit.com/kottenator/jquery-circle-progress/1.2.2/dist/circle-progress.js"></script>
 <script src="{{ url_for('static', filename='js/data.js') }}"></script>
+<script src="{{ url_for('static', filename='js/anime.js') }}"></script>
+<script src="{{ url_for('static', filename='js/pageanime.js') }}"></script>
 <script>
 
     cpucount = [...Array(20).keys()].slice(1);
-    cpuper = {{ dbinfo['cpu']}};
+    cpuper = {{ dbinfo['cpu'] }};
     memorycount = [...Array(20).keys()].slice(1);
-    memoryper = {{ dbinfo['memory']}};
+    memoryper = {{ dbinfo['memory'] }};
     diskcount = [...Array(20).keys()].slice(1);
-    diskper = {{ dbinfo['disk']}};
+    diskper = {{ dbinfo['disk'] }};
 
 </script>
+
+
 <script src="{{ url_for('static', filename='js/pusher.js') }}"></script>
 <script src="{{ url_for('static', filename='js/charts.js') }}"></script>
 <script>
