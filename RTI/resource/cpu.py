@@ -1,5 +1,5 @@
 from RTI import app
-from RTI.Feature.cpu import *
+from RTI.feature.cpu import *
 
 @app.route('/cpu')
 def CPUUsage():

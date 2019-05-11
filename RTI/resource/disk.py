@@ -1,5 +1,5 @@
 from RTI import app
-from RTI.Feature.disk import *
+from RTI.feature.disk import *
 
 @app.route('/disk')
 def DiskUsage():

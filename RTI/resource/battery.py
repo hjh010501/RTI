@@ -1,5 +1,5 @@
 from RTI import app
-from RTI.Feature.battery import *
+from RTI.feature.battery import *
 
 @app.route('/battery')
 def BatteryUsage():

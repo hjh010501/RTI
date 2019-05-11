@@ -1,9 +1,9 @@
 import pusher
 import RTI.configs
-from RTI.Database.cpu import *
-from RTI.Database.memory import *
-from RTI.Database.disk import *
-from RTI.Database.battery import *
+from RTI.database.cpu import *
+from RTI.database.memory import *
+from RTI.database.disk import *
+from RTI.database.battery import *
 from apscheduler.schedulers.background import BackgroundScheduler
 
 

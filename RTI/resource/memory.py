@@ -1,5 +1,5 @@
 from RTI import app
-from RTI.Feature.memory import *
+from RTI.feature.memory import *
 
 @app.route('/memory')
 def MemoryUsage():

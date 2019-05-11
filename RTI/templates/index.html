@@ -14,7 +14,7 @@
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <link rel="stylesheet" type="text/css" href="css/init.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/init.css') }}">
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>🔍RTI :: Real-Time Inspector</title>
 </head>
@@ -34,6 +34,9 @@
         </div>
     </div>
 
+    <div id="test">
+        
+    </div>
     <div class="layout-left">
 
     </div>
@@ -60,11 +63,20 @@
 <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
 <script src="https://www.chartjs.org/dist/2.8.0/Chart.min.js"></script>
 <script src="https://rawgit.com/kottenator/jquery-circle-progress/1.2.2/dist/circle-progress.js"></script>
-<script src="js/data.js"></script>
-<script src="js/pusher.js"></script>
-<script src="js/charts.js"></script>
+<script src="{{ url_for('static', filename='js/data.js') }}"></script>
 <script>
 
+    cpucount = [...Array(20).keys()].slice(1);
+    cpuper = {{ dbinfo['cpu']}};
+    memorycount = [...Array(20).keys()].slice(1);
+    memoryper = {{ dbinfo['memory']}};
+    diskcount = [...Array(20).keys()].slice(1);
+    diskper = {{ dbinfo['disk']}};
+
+</script>
+<script src="{{ url_for('static', filename='js/pusher.js') }}"></script>
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+<script>
 
     let cpuchart = new Chart(selcpuchart, {
         type: 'line',

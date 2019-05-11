@@ -12,7 +12,6 @@ cpuchannel.bind('cpu-perform', function (data) {
     if (cpucount.length >= 20) {
         cpucount.shift()
         cpuper.shift()
-        console.log(cpucount);
     }
 
     cpucount.push(cpucount_number);
@@ -27,7 +26,6 @@ memorychannel.bind('memory-perform', function (data) {
     if (memorycount.length >= 20) {
         memorycount.shift()
         memoryper.shift()
-        console.log(memorycount);
     }
 
     memorycount.push(memorycount_number);
@@ -45,10 +43,9 @@ memorychannel.bind('memory-perform', function (data) {
 
 let channel = pusher.subscribe('rti-disk-channel');
 channel.bind('disk-perform', function (data) {
-    if (diskcount.length >= 60) {
+    if (diskcount.length >= 20) {
         diskcount.shift()
         diskper.shift()
-        console.log(memorycount);
     }
 
     diskcount.push(diskcount_number);

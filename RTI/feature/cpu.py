@@ -1,4 +1,4 @@
-from RTI.Feature import *
+from RTI.feature import *
 import shlex
 
 def get_processor_name():
