@@ -5,7 +5,6 @@ from mongoalchemy.session import Session
 import datetime
 
 class per_cpu(DB.Document):
-    _id = DB.ObjectIdField
     n = DB.FloatField(required=True)
     t = DB.DateTimeField(required=True)
 

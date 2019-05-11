@@ -25,4 +25,5 @@ db = MongoAlchemy(app)
 database_load('battery',
               'cpu',
               'memory',
-              'disk')
+              'disk',
+              'trainlogs')

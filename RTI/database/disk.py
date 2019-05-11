@@ -3,10 +3,10 @@ from RTI.feature.disk import *
 import datetime
 
 class per_disk(DB.Document):
-    p = DB.FloatField()
-    used = DB.FloatField()
-    unused = DB.FloatField()
-    s = DB.FloatField()
+    p = DB.FloatField(required=True)
+    used = DB.FloatField(required=True)
+    unused = DB.FloatField(required=True)
+    s = DB.FloatField(required=True)
     t = DB.DateTimeField(required=True)
 
 def per_disk_upload(diskpercent, diskused, diskunused, disksize):

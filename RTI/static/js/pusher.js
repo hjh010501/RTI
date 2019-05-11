@@ -32,8 +32,9 @@ memorychannel.bind('memory-perform', function (data) {
     memoryper.push(Math.round(data.mper));
     c5.circleProgress('value', Math.round(data.mper) * 0.01);
     memorycount_number++;
-    memorychart.update()
-
+    memorychart.update();
+    document.getElementById('memoryused').innerHTML = data.mused;
+    document.getElementById('memoryunused').innerHTML = data.munused;
 });
 
 // let channel = pusher.subscribe('rti-battery-channel');
@@ -41,8 +42,8 @@ memorychannel.bind('memory-perform', function (data) {
 //     document.querySelector('.layout-center > h2').innerHTML += JSON.stringify(data);
 // });
 
-let channel = pusher.subscribe('rti-disk-channel');
-channel.bind('disk-perform', function (data) {
+let diskchannel = pusher.subscribe('rti-disk-channel');
+diskchannel.bind('disk-perform', function (data) {
     if (diskcount.length >= 20) {
         diskcount.shift()
         diskper.shift()
@@ -53,4 +54,6 @@ channel.bind('disk-perform', function (data) {
     c6.circleProgress('value', Math.round(data.dper) * 0.01);
     diskcount_number++;
     diskchart.update()
+    document.getElementById('diskused').innerHTML = data.dused;
+    document.getElementById('diskunused').innerHTML = data.dunused;
 });

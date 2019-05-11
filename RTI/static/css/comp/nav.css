@@ -51,4 +51,10 @@
     padding: 10px;
     color: #999;
     text-transform: uppercase;
+    cursor: hand;
+    transition: .2s;
+}
+
+.nav-menu-button:hover {
+    color: #fff;
 }

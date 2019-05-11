@@ -3,9 +3,9 @@ from RTI.feature.memory import *
 import datetime
 
 class per_memory(DB.Document):
-    p = DB.FloatField()
-    used = DB.IntField()
-    unused = DB.IntField()
+    p = DB.FloatField(required=True)
+    used = DB.IntField(required=True)
+    unused = DB.IntField(required=True)
     t = DB.DateTimeField(required=True)
 
 def per_memory_upload(memoryused, memoryunused, memorypercent):

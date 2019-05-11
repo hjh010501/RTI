@@ -4,8 +4,8 @@ import datetime
 
 
 class per_battery(DB.Document):
-    p = DB.FloatField()
-    status = DB.StringField()
+    p = DB.FloatField(required=True)
+    status = DB.StringField(required=True)
     t = DB.DateTimeField(required=True)
 
 
