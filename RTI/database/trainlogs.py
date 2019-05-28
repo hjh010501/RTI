@@ -12,9 +12,16 @@ class train_logs(DB.Document):
 def train_logs_upload(logs, epoch, loss, accuracy, t):
     train_logs(logs=logs, epoch=epoch, loss=loss, accuracy=accuracy, t=t).save()
 
-def get_memory_info():
-    list = train_logs.query.descending('t').all()[::-1]
-    values = []
+def get_train_info():
+    list = train_logs.query.descending('epoch').all()[::-1]
+    result = []
     for value in list:
-        values.append(round(value.p))
-    return values
+        result.append({
+            'logs': value.logs,
+            'epoch': value.epoch,
+            'loss': value.loss,
+            'accuracy': value.accuracy,
+            't': value.t
+        })
+    print(result)
+    return result

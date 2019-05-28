@@ -60,6 +60,17 @@ diskchannel.bind('disk-perform', function (data) {
 
 let trainchannel = pusher.subscribe('rti-train-channel');
 trainchannel.bind('train-perform', function (data) {
+    trainepoch.push(data.epoch);
+    trainloss.push(data.loss);
+    trainaccuracy.push(data.accuracy);
+    if (maxloss <= data.loss) {
+        maxloss = data.loss;
+        chartoptions3.scales.yAxes[0].ticks.max = maxloss;
+    }
+    losschart.update();
+    accuracychart.update();
+    document.getElementById('lossvalue').innerHTML = data.loss;
+    document.getElementById('accuracyvalue').innerHTML = data.accuracy;
     $('.logspanel').append("[" + data.t + "] " + data.logs + "<br>");
     $(".logspanel").scrollTop($(".logspanel")[0].scrollHeight);
 });

@@ -11,4 +11,8 @@ let diskcount = new Array();
 let diskper = new Array();
 let diskcount_number = 20;
 
+let trainepoch = new Array();
+let trainloss = new Array();
+let trainaccuracy = new Array();
 
+let maxloss = 0;

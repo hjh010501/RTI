@@ -8,3 +8,9 @@
     height: 400px;
     margin-top: 150px;
 }
+
+#loss-chart, #accuracy-chart {
+    display: block;
+    height: 390px !important;
+    width: 1040px !important;
+}

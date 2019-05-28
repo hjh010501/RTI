@@ -2,6 +2,7 @@ from RTI.database.cpu import get_cpu_info
 from RTI.database.memory import get_memory_info
 from RTI.database.disk import get_disk_info
 from RTI.database.battery import get_battery_info
+from RTI.database.trainlogs import get_train_info
 from RTI import app
 from RTI.loader import resource_load
 from RTI.feature.cpu import *
@@ -14,7 +15,8 @@ dbinfo = {
     'cpu': get_cpu_info(),
     'memory': get_memory_info(),
     'disk': get_disk_info(),
-    'battery': get_battery_info()
+    'battery': get_battery_info(),
+    'train_info': get_train_info()
 }
 
 @app.route('/')

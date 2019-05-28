@@ -60,11 +60,21 @@
                     </div>MB</h3>
                 <canvas id="disk-chart" width="400" height="150"></canvas>
             </div>
+            <div style="height: 200px;" class="blank"></div>
         </div>
 
         <div style="display: none;" class="Status">
                 <h1>Status</h1>
+                <div class="chartarea">
+                    <h3>Current Train Loss: <div class="odometer" id="lossvalue"></div></h3>
+                    <canvas id="loss-chart" width="400" height="150"></canvas>
+                </div>
+                <div class="chartarea">
+                    <h3>Current Train Accuracy: <div class="odometer" id="accuracyvalue"></div></h3>
+                    <canvas id="accuracy-chart" width="400" height="150"></canvas>
+                </div>
 
+                <div style="height: 200px;" class="blank"></div>
         </div>
 
         <div style="display: none;" class="Logs">
@@ -97,7 +107,6 @@
 <script src="{{ url_for('static', filename='js/pusher.js') }}"></script>
 <script src="{{ url_for('static', filename='js/charts.js') }}"></script>
 <script>
-
     let cpuchart = new Chart(selcpuchart, {
         type: 'line',
         data: {
@@ -125,6 +134,24 @@
         options: chartoptions
     });
 
+    let losschart = new Chart(sellosschart, {
+        type: 'line',
+        data: {
+            labels: trainepoch,
+            datasets: losschartdatasets
+        },
+        options: chartoptions3
+    });
+
+
+    let accuracychart = new Chart(selaccuracychart, {
+        type: 'line',
+        data: {
+            labels: trainepoch,
+            datasets: accuracychartdatasets
+        },
+        options: chartoptions2
+    });
 
     let c4 = $('#cpucircle');
     c4.circleProgress({
